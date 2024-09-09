@@ -30,3 +30,7 @@ yarn-error.log*
 *.sock
 
 /test
+/temp
+temp.*
+
+/logs/*.log
