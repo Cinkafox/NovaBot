@@ -1,7 +1,30 @@
 import ffmpeg from "fluent-ffmpeg";
 import fs from "fs";
 import { Message, MessageFlags } from "discord.js-selfbot-v13";
-import wav from "node-wav";
+import ContentManager from "../../managment/ContentManager.js";
+import { StreamOutput } from '@dank074/fluent-ffmpeg-multistream-ts';
+import { PassThrough } from 'stream';
+
+/**
+ * 
+ * @param {Buffer} buffer 
+ * @param {*} m 
+ */
+function playBuff(buffer,m){
+    m.channel.send({
+        files: [
+            {
+                attachment: buffer,
+                name: "voice-message.wav",
+                contentType : "audio/wav",
+                duration: buffer.length / 48000 / 2,
+                waveform: 'AAANCAsHDRIJBwoLB2a0tbWgnk95Rz0='
+            }
+        ]
+        ,
+        flags : MessageFlags.FLAGS.IS_VOICE_MESSAGE
+    })
+}
 
 /**
  * 
@@ -27,30 +50,23 @@ export default function (input, m, options = []){
         {
             isHttpUrl = input.startsWith('http') || input.startsWith('https');
             isHls = input.includes('m3u');
-        }        
+        }  
+        
+        if(!isHttpUrl && ContentManager.getExtension(input) === "wav"){
+            let buffer = fs.readFileSync(input);
+            playBuff(buffer, m);
+            return "audio ended";
+        }
 
         try {
-            var path = "temp.wav";
+            const tunnel = new PassThrough()
+
             command = ffmpeg(input)
+            .addOption('-loglevel', '0')
+            .addOption('-fflags', 'nobuffer')
+            .addOption('-analyzeduration', '0')
             .on('end', () => {
                 command = undefined;
-                let buffer = fs.readFileSync(path);
-                let result = wav.decode(buffer);
-
-                m.channel.send({
-                    files: [
-                        {
-                            attachment: wav.encode(result.channelData, { sampleRate: result.sampleRate, float: true, bitDepth: 32 }),
-                            name: "voice-message.wav",
-                            contentType : "audio/wav",
-                            duration: result.channelData[0].length/ result.sampleRate,
-                            waveform: 'AAANCAsHDRIJBwoLB2a0tbWgnk95Rz0='
-                        }
-                    ]
-                    ,
-                    flags : MessageFlags.FLAGS.IS_VOICE_MESSAGE
-                })
-                resolve("audio ended")
             })
             .on("error", (err, stdout, stderr) => {
                 command = undefined;
@@ -58,9 +74,11 @@ export default function (input, m, options = []){
             })
             .on('stderr', console.error)
             .audioCodec('pcm_s16le')
-            .format("wav")
-            .output(path)
-            .addOption('-analyzeduration', '0')
+            .format('wav')
+            .output(StreamOutput(tunnel).url)
+            .noVideo()
+            .audioChannels(2)
+            .audioFrequency(48000);
 
             if(isHttpUrl) {
                 command.inputOption('-headers', 
@@ -75,8 +93,16 @@ export default function (input, m, options = []){
             }
 
             command.addOptions(options)
-            
             command.run();
+
+            const chunks = [];
+            tunnel.on('data', (d)=>{
+                chunks.push(d);
+            })
+
+            tunnel.on('end',()=>{
+                playBuff(Buffer.concat(chunks), m);
+            })
         } catch(e) {
             command = undefined;
             reject("cannot play video " + e.message);
