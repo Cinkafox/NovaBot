@@ -19,6 +19,7 @@
     "@discordjs/opus": "^0.9.0",
     "@discordjs/voice": "^0.17.0",
     "arg": "^5.0.2",
+    "canvas": "^2.11.2",
     "discord.js-selfbot-v13": "^3.3.0",
     "dotenv": "^16.4.5",
     "fluent-ffmpeg": "^2.1.3",

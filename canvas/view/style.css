@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #2d2d2d;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+#container {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    max-width: 1200px;
+    height: 90%;
+    gap: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 300px;
+    background-color: #3d3d3d;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    margin-bottom: 10px;
+    color: #fff;
+    text-align: center;
+}
+
+.dynamic-text,
+.dynamic-image {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.dynamic-text input,
+.dynamic-image input {
+    flex-grow: 1;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button.removeText, 
+button.removeImage {
+    background-color: #dc3545;
+    padding: 6px 12px;
+}
+
+button.removeText:hover,
+button.removeImage:hover {
+    background-color: #c82333;
+}
+
+#addTextButton, #addImageButton {
+    background-color: #28a745;
+}
+
+#addTextButton:hover, #addImageButton:hover {
+    background-color: #218838;
+}
+
+#canvasForm button[type="submit"] {
+    background-color: #17a2b8;
+}
+
+#canvasForm button[type="submit"]:hover {
+    background-color: #138496;
+}
+
+#error {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    display: none; /* По умолчанию скрыт */
+}
+
+canvas {
+    background-color: #fff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    flex-grow: 1;
+    border-radius: 8px;
+}

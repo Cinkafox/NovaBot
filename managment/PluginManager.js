@@ -2,6 +2,7 @@ import MessageContext from "../data/messageContext.js";
 import fs from "fs";
 import path from "path";
 import logger from "../utils/logger.js";
+import { isPromise } from "util/types";
 
 function requireUncached(module) {
     import(module);
@@ -35,29 +36,39 @@ class PluginManager {
         }
     }
 
-    Execute(args){
-        return this._Execute(args,this.plugins,...arguments)
+    Execute(args, errorHandler){
+        let runArgs = [...arguments];
+        runArgs.shift()
+        runArgs.shift()
+        return this._Execute(args, errorHandler, this.plugins, [args, ...runArgs])
     }
 
-    _Execute(args, commands) {
+    _Execute(args, errorHandler, commands, execArgs) {
         const command = commands[args[0].toLowerCase()]
 
-        let CustomFunctionArgument = [...arguments]
-        CustomFunctionArgument.shift()
-        CustomFunctionArgument.shift()
-
-        if (!command) return {e:0,error: Error("Команды нема")}
+        if (!command) {
+            errorHandler({e:0,error: Error("Команды нема")})
+            return;
+        }
         if (args[1] && command[args[1]]) {
             args.shift()
-            return this._Execute(args, command, ...CustomFunctionArgument)
+            return this._Execute(args, errorHandler, command, execArgs)
         }
         var func = command
         if(command.default !== undefined) func = command.default
 
         try {
-            return func(...CustomFunctionArgument)
+            /**
+             * @type {Promise}
+             */
+            let outp = func(...execArgs);
+            if(isPromise(outp)){
+                outp.catch(error =>{
+                    errorHandler({e:1,error});
+                })
+            }
         } catch (error) {
-            return {e:1,error}
+            errorHandler({e:1,error});
         }
     }
 

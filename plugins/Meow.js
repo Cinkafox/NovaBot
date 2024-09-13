@@ -1,4 +1,4 @@
-import PluginManager from "../managment/PluginManager.js"
+import PluginManager from "../managment/PluginManager.js";
 import ContentManager from "../managment/ContentManager.js";
 import streamMessageAudio from "../data/stream/streamMessageAudio.js";
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Viewer</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div id="container">
+        <!-- Левая панель с формой -->
+        <form id="canvasForm">
+            <h2>Настройки Canvas</h2>
+
+            <div id="textFieldsContainer">
+                <div class="dynamic-text">
+                    <input type="text" placeholder="Текст" required>
+                    <button type="button" class="removeText">Удалить</button>
+                </div>
+            </div>
+            <button type="button" id="addTextButton">Добавить текст</button>
+
+            <div id="imageFieldsContainer">
+                <div class="dynamic-image">
+                    <input type="file" accept="image/*" required>
+                    <button type="button" class="removeImage">Удалить</button>
+                </div>
+            </div>
+            <button type="button" id="addImageButton">Добавить картину</button>
+
+            <button type="submit">Обновить Canvas</button>
+
+            <div id="error">Ошибка: Не удалось обновить Canvas</div>
+        </form>
+
+        <!-- Правая панель с Canvas -->
+        <canvas id="demotivatorCanvas"></canvas>
+    </div>
+
+    <script type="module" src="./index.js"></script>
+</body>
+</html>

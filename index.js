@@ -23,19 +23,19 @@ client.on("messageCreate",async (m)=>{
 
     logger.info(context.Author, context.Text);
 
-    var out = PluginManager.Execute(context.Args,context)
-    if(out != null){
-        if(out.e ==0){
-            logger.error("command not found")
-        }
-    
-        if(out.e == 1){
-            logger.error("Some error while running")
-            console.log(out.error)
-        }
-    }
+    PluginManager.Execute(context.Args, errorHandler, context)
 })
 
+function errorHandler(err){
+    if(err.e ==0){
+        logger.error("command not found")
+    }
+
+    if(err.e == 1){
+        logger.error("Some error while running")
+        console.log(err.error)
+    }
+}
 
 client.login(process.env.DISCORD_KEY);
 logger.info("Bot is starting");
