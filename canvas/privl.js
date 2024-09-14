@@ -17,13 +17,8 @@ let func = function(canvas, ctx, args){
      canvas.width = background.width;
      canvas.height = background.height;
 
-     let maxy = imageWidth > imageHeight ? imageWidth : imageHeight;
-     let miny = imageWidth < imageHeight ? imageWidth : imageHeight;
-
-     var delta = maxy-miny;
-
-     ctx.drawImage(image, -delta / 2, 0, maxy, maxy);
      ctx.drawImage(background, 0, 0, imageWidth, imageHeight);
+     ctx.drawImage(image, 288,0, 233, 233)
 }
 
-export default new CanvasCompound(0,1,["./assets/images/boykisser.png"],func);
+export default new CanvasCompound(0,1,["./assets/images/meow.png"],func);
