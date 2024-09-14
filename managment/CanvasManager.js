@@ -1,7 +1,5 @@
 import CanvasArgs from "../canvas/data/CanvasArgs.js";
 import { createCanvas, loadImage } from 'canvas';
-import path from "path";
-import fs from "fs";
 
 class CanvasManager{
     constructor(){
