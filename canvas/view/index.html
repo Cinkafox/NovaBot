@@ -11,6 +11,11 @@
         <!-- Левая панель с формой -->
         <form id="canvasForm">
             <h2>Настройки Canvas</h2>
+            <div class="dynamic-type">
+                <input type="text" placeholder="Текст" id="typecanvas" required>
+            </div>
+
+            <hr>
 
             <div id="textFieldsContainer">
                 <div class="dynamic-text">
@@ -20,6 +25,9 @@
             </div>
             <button type="button" id="addTextButton">Добавить текст</button>
 
+
+            <hr>
+
             <div id="imageFieldsContainer">
                 <div class="dynamic-image">
                     <input type="file" accept="image/*" required>
@@ -28,13 +36,17 @@
             </div>
             <button type="button" id="addImageButton">Добавить картину</button>
 
+            <hr>
+
             <button type="submit">Обновить Canvas</button>
 
             <div id="error">Ошибка: Не удалось обновить Canvas</div>
         </form>
 
         <!-- Правая панель с Canvas -->
-        <canvas id="demotivatorCanvas"></canvas>
+        <div>
+            <canvas id="demotivatorCanvas"></canvas>
+        </div>
     </div>
 
     <script type="module" src="./index.js"></script>

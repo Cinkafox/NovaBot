@@ -5,7 +5,6 @@ const ctx = canvas.getContext('2d');
 canvas.width = 800;  // Ширина canvas
 canvas.height = 600;  // Высота canvas
 
-const file = import("../boykisser.js");
 const errorElement = document.getElementById('error');
 
 // Функция для обновления Canvas с обработкой ошибок
@@ -14,14 +13,12 @@ async function updateCanvas(texts, images) {
         // Очищаем canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Вызываем демотиватор с параметрами
-        const o = await file;
+        let a = document.getElementById("typecanvas").value
+        const o = await import("../"+a+".js");
         const args = new CanvasArgs(texts, ProcessImage);
         await args.AddImages(images)
-
         await o.default.execute(canvas, ctx, args);
 
-        // Если все прошло успешно, скрываем ошибку
         errorElement.style.display = 'none';
     } catch (error) {
         // Если произошла ошибка, выводим ее на экран
@@ -46,7 +43,6 @@ async function ProcessImage(file) {
                 img.onload = () => resolve(img);
             };
             reader.onerror = reject;
-            console.log(file)
             reader.readAsDataURL(file);
         } else {
             resolve(null);

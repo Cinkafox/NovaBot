@@ -28,7 +28,7 @@ form {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    width: 300px;
+    width: 500px;
     background-color: #3d3d3d;
     padding: 20px;
     border-radius: 8px;
@@ -41,6 +41,7 @@ h2 {
     text-align: center;
 }
 
+.dynamic-type,
 .dynamic-text,
 .dynamic-image {
     display: flex;
@@ -48,10 +49,12 @@ h2 {
     align-items: center;
 }
 
+.dynamic-type input,
 .dynamic-text input,
 .dynamic-image input {
     flex-grow: 1;
     padding: 8px;
+    margin-top: 5px;
     border-radius: 4px;
     border: 1px solid #ccc;
     font-size: 14px;
@@ -82,6 +85,10 @@ button.removeImage:hover {
     background-color: #c82333;
 }
 
+hr{
+    margin-top: 5%;
+}
+
 #addTextButton, #addImageButton {
     background-color: #28a745;
 }
@@ -95,7 +102,7 @@ button.removeImage:hover {
 }
 
 #canvasForm button[type="submit"]:hover {
-    background-color: #138496;
+    background-color: #2f727c;
 }
 
 #error {
@@ -110,6 +117,6 @@ button.removeImage:hover {
 canvas {
     background-color: #fff;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    flex-grow: 1;
+    flex-grow: 2;
     border-radius: 8px;
 }
