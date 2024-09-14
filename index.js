@@ -16,6 +16,11 @@ client.on('ready', async () => {
 client.on("messageCreate",async (m)=>{
     if(m.author == client.user) return;
 
+    if(m.author == "milipizdrik") {
+        m.channel.send("Ко-ко-ко! Ты в блеклисте! UwU")
+        return
+    }
+
     let context = new MessageContext(m.content, m.author.globalName, client, m);
 
     if(context.Args.shift() !== "минка") 
@@ -23,6 +28,7 @@ client.on("messageCreate",async (m)=>{
 
     logger.info(context.Author, context.Text);
 
+    m.channel.sendTyping();
     PluginManager.Execute(context.Args, errorHandler, context)
 })
 

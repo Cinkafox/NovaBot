@@ -44,6 +44,11 @@ class PluginManager {
     }
 
     _Execute(args, errorHandler, commands, execArgs) {
+        if(args[0] === undefined){
+            errorHandler({e:0,error: Error("Команды нема")})
+            return;
+        }
+
         const command = commands[args[0].toLowerCase()]
 
         if (!command) {
