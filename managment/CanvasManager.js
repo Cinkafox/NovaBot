@@ -13,8 +13,11 @@ class CanvasManager{
      */
     async draw(args, path){
         var canvasDrawer = await import(path);
-        await canvasDrawer.default.execute(this.canvas, this.ctx, args);
-        return this.canvas.toBuffer('image/png');
+        let outData = await canvasDrawer.default.execute(this.canvas, this.ctx, args);
+
+        if(outData === undefined)
+            return this.canvas.toBuffer('image/png');
+        return outData;
     }
 
     createCanvasArgs(args){

@@ -31,6 +31,20 @@ class PlayerListManager{
         this.listObj[listName].push(player);
         this._dirty();
     }
+
+    remove(listName, player){
+        this._ensureList(listName);
+        var index = this.listObj[listName].indexOf(player);
+        if (index !== -1) {
+            this.listObj[listName].splice(index, 1);
+        }
+        this._dirty();
+    }
+
+    list(listName){
+        this._ensureList(listName);
+        return this.listObj[listName];
+    }
 }
 
 export default new PlayerListManager();

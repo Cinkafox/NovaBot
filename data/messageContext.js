@@ -1,4 +1,5 @@
-import { Client, Message } from "discord.js-selfbot-v13";
+import { Client, Message, MessagePayload } from "discord.js-selfbot-v13";
+import TraceManager from "../managment/TraceManager.js";
 
 export default class MessageContext{
     /**
@@ -22,6 +23,16 @@ export default class MessageContext{
         this.Author = author;
         this.Message = message;
         this.Client = client;
+    }
+
+
+    /**
+     * 
+     * @param {string | MessagePayload | import("discord.js-selfbot-v13").MessageOptions} message 
+     */
+    async sendMessage(message){
+        let sended = await this.Message.channel.send(message);
+        TraceManager.addTrace(this.Message.id, sended);
     }
 
     /**

@@ -52,7 +52,7 @@ class PluginManager {
         const command = commands[args[0].toLowerCase()]
 
         if (!command) {
-            errorHandler({e:0,error: Error("Команды нема")})
+            errorHandler({e:0,error: Error("Команды нема")}, ...execArgs)
             return;
         }
         if (args[1] && command[args[1]]) {
@@ -69,11 +69,11 @@ class PluginManager {
             let outp = func(...execArgs);
             if(isPromise(outp)){
                 outp.catch(error =>{
-                    errorHandler({e:1,error});
+                    errorHandler({e:1,error}, ...execArgs);
                 })
             }
         } catch (error) {
-            errorHandler({e:1,error});
+            errorHandler({e:1,error}, ...execArgs);
         }
     }
 

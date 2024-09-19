@@ -3,17 +3,17 @@ import ContentManager from "../managment/ContentManager.js";
 import streamMessageAudio from "../data/stream/streamMessageAudio.js";
 
 PluginManager.CreatePlugin("помяукай",async (args,context)=>{
-    await doMeowThink(context.Message, "./assets/music/meow.wav");
+    await doMeowThink(context, "./assets/music/meow.wav");
 })
 
 PluginManager.CreatePlugin("пофырчи",async (args,context)=>{
-    await doMeowThink(context.Message, "./assets/music/fir.wav");
+    await doMeowThink(context, "./assets/music/fir.wav");
 })
 
-async function doMeowThink(message, path){
-    const channel = message.member.voice.channel;
+async function doMeowThink(context, path){
+    const channel = context.Message.member.voice.channel;
     if(channel === null){
-        await streamMessageAudio(path, message)
+        await streamMessageAudio(path, context)
         return;
     }
     await ContentManager.play(channel, path, false);

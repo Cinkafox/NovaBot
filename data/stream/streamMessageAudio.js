@@ -4,14 +4,15 @@ import { Message, MessageFlags } from "discord.js-selfbot-v13";
 import ContentManager from "../../managment/ContentManager.js";
 import { StreamOutput } from '@dank074/fluent-ffmpeg-multistream-ts';
 import { PassThrough } from 'stream';
+import MessageContext from "../messageContext.js";
 
 /**
  * 
  * @param {Buffer} buffer 
  * @param {*} m 
  */
-function playBuff(buffer,m){
-    m.channel.send({
+function playBuff(buffer,context){
+    context.sendMessage({
         files: [
             {
                 attachment: buffer,
@@ -29,13 +30,12 @@ function playBuff(buffer,m){
 /**
  * 
  * @param {string} input 
- * @param {Message} m 
+ * @param {MessageContext} context 
  * @param {[string]} options
  * @returns {Promise<string>}
  */
-export default function (input, m, options = []){
+export default function (input, context, options = []){
     return new Promise((resolve, reject) => {
-        m.channel.sendTyping();
         const headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.3",
             "Connection": "keep-alive"
@@ -54,7 +54,7 @@ export default function (input, m, options = []){
         
         if(!isHttpUrl && ContentManager.getExtension(input) === "wav"){
             let buffer = fs.readFileSync(input);
-            playBuff(buffer, m);
+            playBuff(buffer, context);
             return "audio ended";
         }
 
@@ -101,7 +101,7 @@ export default function (input, m, options = []){
             })
 
             tunnel.on('end',()=>{
-                playBuff(Buffer.concat(chunks), m);
+                playBuff(Buffer.concat(chunks), context);
             })
         } catch(e) {
             command = undefined;

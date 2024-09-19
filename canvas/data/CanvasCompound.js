@@ -3,6 +3,13 @@ import CanvasArgs from "./CanvasArgs.js";
 export default class CanvasCompound{
     #func;
 
+    /**
+     * 
+     * @param {Number} numArg 
+     * @param {Number} numImg 
+     * @param {[string]} defaultImgs 
+     * @param {*} func 
+     */
     constructor(numArg, numImg, defaultImgs, func){
         this.numArg = numArg;
         this.numImg = numImg;

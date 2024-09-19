@@ -12,7 +12,7 @@ PluginManager.CreatePlugin("демотиватор",async (args, context)=>{
 
     let image = await CanvasManager.draw(canvasArgs, "../canvas/demotivator.js");
 
-    message.channel.send({
+    context.sendMessage({
         content: "Нате," + message.author.toString(),
         files: [image]
     })

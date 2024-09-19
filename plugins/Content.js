@@ -26,7 +26,7 @@ PluginManager.CreatePlugin("цыц",async (args,context)=>{
 
 PluginManager.CreatePlugin("гс", async(args, context)=>{
   try {
-    await streamMessageAudio(context.Args[1], context.Message)
+    await streamMessageAudio(context.Args[1], context)
   } catch (error) {
     console.log(error)
   }
