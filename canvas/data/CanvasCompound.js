@@ -22,14 +22,13 @@ export default class CanvasCompound{
      * @param {CanvasArgs} args 
      */
     async execute(canvas,ctx,args){
-        if(this.numArg != args.args.length) 
+        if(this.numArg > args.args.length) 
             throw new Error("ARGS COUNT NOT MATCHING! EXCEPT:" + this.numArg + " GOT:" + args.args.length);
-        if(this.numImg != args.images.length) 
+        if(this.numImg > args.images.length) 
             throw new Error("IMAGE COUNT NOT MATCHING! EXCEPT:" + this.numImg + " GOT:" + args.images.length);
 
         await args.AddImages(this.defaultImgs, false)
 
         this.#func(canvas, ctx, args);
     }
-
 }
