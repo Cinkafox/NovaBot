@@ -8,7 +8,7 @@ import { MessageAttachment } from "discord.js-selfbot-v13";
 
 var YesNo = ["Агась!", "Неа!", "Точно нет!", "Наверн да", "Естественно!", "Ясень пень!", "хз лол!", "Лучше не!", "Ясное дело!", "Капец! тычо куку? нет конечн!", "Ты чооооо! естественно да!"];
 
-PluginManager.CreatePlugin("правда",(args,m) =>{
+PluginManager.CreatePlugin("правда",(args, context) =>{
     let selection = YesNo[Math.floor(Math.random() * YesNo.length)]
     context.sendMessage(selection)
 })
