@@ -13,7 +13,7 @@ PluginManager.CreatePlugin("правда",(args, context) =>{
     context.sendMessage(selection)
 })
 
-PluginManager.CreatePlugin("статус",async (args,m) =>{
+PluginManager.CreatePlugin("статус",async (args, context) =>{
 
     let parsed = url.parse(args[1]);
     
