@@ -1,9 +1,6 @@
 import PluginManager from "../managment/PluginManager.js";
-import https from "https";
-import http from "http";
 import url from "url";
 import tiny from "tiny-json-http";
-import { MessageAttachment } from "discord.js-selfbot-v13";
 
 
 var YesNo = ["Агась!", "Неа!", "Точно нет!", "Наверн да", "Естественно!", "Ясень пень!", "хз лол!", "Лучше не!", "Ясное дело!", "Капец! тычо куку? нет конечн!", "Ты чооооо! естественно да!"];
@@ -26,8 +23,14 @@ PluginManager.CreatePlugin("статус",async (args, context) =>{
         parsed.protocol = "https:"
     }
 
+    var toPath = ""
+
+    if(!parsed.path.endsWith("/")){
+        toPath = "/"
+    }
+
     let portBuilder = parsed.port != null ? ":" + parsed.port : "";
-    let buildedUrl = parsed.protocol + "//" + parsed.hostname + portBuilder + parsed.path + "status";
+    let buildedUrl = parsed.protocol + "//" + parsed.hostname + portBuilder + parsed.path + toPath + "status";
 
     console.log(buildedUrl)
     let data = await getDat(buildedUrl);
@@ -50,25 +53,3 @@ async function getDat(url){
 
     return data;
 }
-
-PluginManager.CreatePlugin("рисуй",async (args,m) =>{
-    let res = await tiny.post({url:"https://api.proxyapi.ru/openai/v1/images/generations",headers:{
-        "Authorization":"Bearer " + process.env.AI_KEY
-    },data:{
-        "model": "dall-e-3",
-        "prompt": args[1],
-        "n": 1,
-        "size": "512x512"
-    }});
-
-    console.log(res.body.data[0].url)
-
-    //let img = await tiny.get({url: res.body.data[0].url});
-
-    m.sendMessage({
-        content: "на",
-        files: [
-            {attachment: res.body.data[0].url, name: "image.png"},
-            ]
-    })
-})
